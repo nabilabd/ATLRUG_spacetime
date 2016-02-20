@@ -1,6 +1,7 @@
 
 library(sp)
-devtools::dev_mode()
+library(devtools)
+dev_mode()
 library(dplyr)
 
 data(meuse)
