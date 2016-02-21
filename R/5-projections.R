@@ -16,6 +16,7 @@ str(meuse)
 
 # Here, a certain epsg code used. To inspect all possible codes that 
 # can be used:
+library(rgdal)
 epsg <- make_EPSG()
 epsg %>% glimpse
 
@@ -26,7 +27,7 @@ epsg %>% glimpse
 # Now, at least two ways to specify projection. An alternative is 
 # to explicitly assign the whole string. See: 
 # http://spatialreference.org/. Can try with `epsg` above, or 
-# rdh coordinate example, with the 
+# rdh coordinate example
 
 full_string <- proj4string(meuse)
 epsg[which(epsg$code == 28992), "prj4"]
@@ -37,7 +38,6 @@ coordinates(meuse) <- ~ x + y
 proj4string(meuse)
 proj4string(meuse) <- full_string
 proj4string(meuse)
-
 
 
 ### can convert between projections.
@@ -52,5 +52,11 @@ proj4string(rdh_coords) <- CRS("+init=epsg:28992")
 longlat_coords <- rdh_coords %>% spTransform(CRS("+init=epsg:4326"))
 longlat_coords %>% str
 longlat_coords %>% as.data.frame %>% glimpse
+
+
+# useful functions
+spDists
+spDistsN1
+
 
 

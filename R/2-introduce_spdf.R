@@ -9,15 +9,20 @@ meuse %>% class
 meuse %>% str
 
 
-# now has five slots. These can be accessed via helper functions: 
+# Now has five slots. These can be accessed via helper functions: 
 bbox(meuse)
 identical(bbox(meuse), meuse@bbox)
 
 coordinates(meuse) %>% head(10)
 identical(coordinates(meuse), meuse@coords)
 
+# difference between slot values and helper functions
 proj4string(meuse)
 meuse@proj4string
+slot(meuse, "proj4string")
+
+identical( meuse@proj4string, slot(meuse, "proj4string") )
+
 
 # data argument
 meuse@data %>% tbl_df
