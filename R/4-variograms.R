@@ -5,10 +5,12 @@ library(gstat)
 # start with an example: calculate sample vgm
 coordinates(meuse) <- ~ x + y
 
-lzn.vgm <- variogram(log(zinc)~1, meuse) 
+lzn.vgm <- variogram(log(zinc)~1, data = meuse) 
 plot(lzn.vgm)
+plot(lzn.vgm, pch=16)
 
 # inspect visual properties
+vgm()
 show.vgms()
 
 # fit a model 
@@ -22,12 +24,12 @@ plot(lzn.vgm, lzn.fit)
 lzn.vgm 
 lzn.vgm %>% str
 
-vgm(1, "Sph", 900, 1)
 lzn.fit
 
-
 # other models available. Behavior varies based on arguments:
-vgm()
+vgm(1, "Sph", 900, 1)
 vgm(2, "Sph", 900, 1)
 vgm(2, "Exp", 850, 1)
+
+
 

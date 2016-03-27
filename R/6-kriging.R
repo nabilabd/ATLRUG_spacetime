@@ -5,6 +5,7 @@ library(gstat)
 
 data(meuse)
 
+# compute sample and fitted variograms
 coordinates(meuse) <- ~ x + y
 lzn.vgm <- variogram(log(zinc)~1, meuse) 
 lzn.fit <- fit.variogram(lzn.vgm, model=vgm(1, "Sph", 900, 1)) 
@@ -30,7 +31,7 @@ lzn.kriged %>% as.data.frame %>%
 # kriging with vgm models automatically fit
 library(automap)
 
-auto_res <- autoKrige(log(zinc) ~ sqrt(dist), meuse, meuse.grid)
+auto_res <- autoKrige(log(zinc) ~ 1, meuse, meuse.grid)
 auto_res[[1]] %>% as.data.frame %>% 
   ggplot(aes(x=x, y=y)) + geom_tile(aes(fill=var1.pred)) + coord_equal() +
   scale_fill_gradient(low = "yellow", high="red") +

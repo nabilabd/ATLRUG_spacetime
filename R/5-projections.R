@@ -5,6 +5,8 @@ source("R/1-data.R")
 # a value (or, Coordinate Reference System). 
 
 # start with example
+data(meuse)
+coordinates(meuse) <- ~ x + y
 
 proj4string(meuse)
 proj4string(meuse) <- CRS("+init=epsg:28992")
@@ -12,7 +14,10 @@ proj4string(meuse)
 
 # so now it returns a value. This can also be seen when inspecting the 
 # object's structure: 
-str(meuse)
+str(meuse) # Q: what's the projection corresponding to this? 
+
+# for available projections
+projInfo() %>% tbl_df
 
 # Here, a certain epsg code used. To inspect all possible codes that 
 # can be used:
@@ -29,6 +34,7 @@ epsg %>% glimpse
 # http://spatialreference.org/. Can try with `epsg` above, or 
 # rdh coordinate example
 
+# can either specity epsg code or the full proj4 string
 full_string <- proj4string(meuse)
 epsg[which(epsg$code == 28992), "prj4"]
 

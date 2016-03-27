@@ -8,33 +8,44 @@ coordinates(meuse) <- ~ x + y
 meuse %>% class
 meuse %>% str
 
+# objects of S4 class have "slots". 
+isS4(meuse)
+slotNames(meuse) # not same as "names"
+str(meuse)
 
-# Now has five slots. These can be accessed via helper functions: 
+identical( slot(meuse, "data"), meuse@data )
+
+
+# So has five slots. Can also be accessed via helper functions, but not always consistent
 bbox(meuse)
 identical(bbox(meuse), meuse@bbox)
 
 coordinates(meuse) %>% head(10)
 identical(coordinates(meuse), meuse@coords)
 
-# difference between slot values and helper functions
 proj4string(meuse)
-meuse@proj4string
 slot(meuse, "proj4string")
 
-identical( meuse@proj4string, slot(meuse, "proj4string") )
 
+# col id's of coordinates
+meuse2 <- meuse %>% as.data.frame %>% select(cadmium:elev, x:y, everything())
+meuse2 %>% glimpse
+coordinates(meuse2) <- ~ x + y
+meuse2 %>% str
+
+### A couple of things to be aware of 
 
 # data argument
-meuse@data %>% tbl_df
-meuse %>% as.data.frame %>% tbl_df
+slot(meuse, "data") %>% tbl_df
+as.data.frame(meuse) %>% tbl_df
 
 
 # potential problems
 library(ggplot2)
 
-# there are two problems here...
-meuse %>% 
-  ggplot(aes(x, y, color = elev)) + geom_point() + coord_equal()
+# there are two problems here... (class; not having the colms)
+meuse %>%  # also problem if using meuse@data
+  
 
 # but this works
 meuse %>% 
