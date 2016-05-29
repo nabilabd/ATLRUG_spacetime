@@ -8,20 +8,21 @@ source("R/1-data.R")
 data(meuse)
 coordinates(meuse) <- ~ x + y
 
+# for available projections
+library(rgdal)
+projInfo() %>% tbl_df
+
+# assigning projection
 proj4string(meuse)
-proj4string(meuse) <- CRS("+init=epsg:28992")
+proj4string(meuse) <- "+init=epsg:28992" # or, CRS("+init=epsg:28992")
 proj4string(meuse) 
 
 # so now it returns a value. This can also be seen when inspecting the 
 # object's structure: 
 str(meuse) # Q: what's the projection corresponding to this? 
 
-# for available projections
-projInfo() %>% tbl_df
-
 # Here, a certain epsg code used. To inspect all possible codes that 
 # can be used:
-library(rgdal)
 epsg <- make_EPSG()
 epsg %>% glimpse
 
@@ -52,7 +53,7 @@ library(rgdal)
 rdh_coords <- meuse %>% as.data.frame %>% select(x, y) 
 rdh_coords %>% glimpse
 coordinates(rdh_coords) <- ~ x + y
-proj4string(rdh_coords) <- CRS("+init=epsg:28992")
+proj4string(rdh_coords) <- "+init=epsg:28992" # CRS("+init=epsg:28992")
 
 # convert to long/lat coords
 longlat_coords <- rdh_coords %>% spTransform(CRS("+init=epsg:4326"))
@@ -63,6 +64,4 @@ longlat_coords %>% as.data.frame %>% glimpse
 # useful functions
 spDists
 spDistsN1
-
-
 
