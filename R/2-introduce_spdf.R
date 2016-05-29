@@ -45,7 +45,7 @@ library(ggplot2)
 
 # there are two problems here... (class; not having the colms)
 meuse %>%  # also problem if using meuse@data
-  
+  ggplot(aes(x, y, color = elev)) + geom_point() + coord_equal()  
 
 # but this works
 meuse %>% 
