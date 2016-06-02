@@ -2,7 +2,9 @@
 source("R/1-data.R")
 
 
-# spatial plotting available in base system
+##############################################################
+## base plotting
+##############################################################
 
 library(maps)
 
@@ -10,9 +12,12 @@ map("world")
 map("usa")
 map("state", "Georgia")
 
-
 # there are drawbacks, though. How to identify e.g., landmarks? 
-# no axes to pinpoint locations. Can use ggplot2
+# no axes to pinpoint locations. 
+
+##############################################################
+## ggplot2
+##############################################################
 
 library(ggplot2)
 
@@ -33,8 +38,6 @@ plot_region(ga)
 plot_region(cty_ga)
 
 ## can use custom datasets
-
-
 # more recently, have: ggmap, leaflet, gganimate
 
 ##############################################################
@@ -88,9 +91,15 @@ my_map %>%
 
 # otherwise, if have point sources, then this allows zooming in
 
+library(readr)
 library(leaflet)
 
+monit_sites <- read_csv("data/epa_mean_latlon.csv")
 
+# Goal: only include sites in continguous US
+monit_sites %>% 
+  leaflet() %>% addTiles() %>% 
+  addMarkers(~ lon, ~ lat, popup = ~ SiteID)
 
 
 ##############################################################
@@ -100,9 +109,6 @@ library(leaflet)
 library(gganimate)
 
 # for differences by a variable, perhaps most commonly: time
-
-
-
-
+# see: https://github.com/dgrtwo/gganimate
 
 
